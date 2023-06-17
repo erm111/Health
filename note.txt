@@ -1,0 +1,34 @@
+ Here are the general ranges for some common health parameters:
+1. Blood Pressure:
+   - Normal: Systolic <120 mmHg and Diastolic <80 mmHg
+   - High (Hypertension): Systolic ≥140 mmHg or Diastolic ≥90 mmHg
+
+2. Blood Sugar/Glucose Level:
+   - Normal Fasting Blood Sugar: 70-100 mg/dL or 3.9-5.6 mmol/L
+   - High Blood Sugar (Hyperglycemia): Fasting >125 mg/dL or 7.0 mmol/L
+   - Low Blood Sugar (Hypoglycemia): <70 mg/dL or <3.9 mmol/L
+
+3. Body Temperature:
+   - Normal: Around 98.6°F or 37°C (may vary slightly between individuals)
+
+4. Heart Rate/Pulse:
+   - Normal Resting Heart Rate: 60-100 bpm (beats per minute)
+
+5. Cholesterol Levels:
+   - Total Cholesterol:
+     - Desirable: <200 mg/dL
+     - High: ≥240 mg/dL
+
+   - LDL (Low-Density Lipoprotein) Cholesterol:
+     - Optimal: <100 mg/dL
+     - High: ≥160 mg/dL
+
+   - HDL (High-Density Lipoprotein) Cholesterol:
+     - Good: >40 mg/dL for men, >50 mg/dL for women
+     - Low: <40 mg/dL for men, <50 mg/dL for women
+
+6. Body Mass Index (BMI):
+   - Underweight: <18.5 kg/m²
+   - Normal Weight: 18.5-24.9 kg/m²
+   - Overweight: 25-29.9 kg/m²
+   - Obesity: ≥30 kg/m²

@@ -1,0 +1,73 @@
+/* Styles for the alert boxes */
+.form-container {
+  margin: 0 auto;
+  max-width: 500px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #428bca;
+}
+
+.form-container .form-control {
+  margin-bottom: 15px;
+}
+
+.form-container .btn-primary {
+  width: 100px;
+  border-radius: 20px;
+  background-color: #428bca;
+  color: #fff;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.form-container .btn-primary:hover {
+  background-color: #fff;
+  color: #428bca;
+}
+
+.alert {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.alert-face {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.alert-yellow {
+  background-color: #fff3cd;
+}
+
+.alert-green {
+  background-color: #d4edda;
+}
+
+/* Styles for the health parameters table */
+#parametersTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+#parametersTable th {
+  background-color: #428bca;
+  color: #fff;
+  padding: 10px;
+  text-align: left;
+}
+
+#parametersTable td {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+#parametersTableBody tr:last-child td {
+  border-bottom: none;
+}

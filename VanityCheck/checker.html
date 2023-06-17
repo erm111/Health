@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Health Checker</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <style>
+    /* Styles for the alert boxes */
+    .form-container {
+      margin: 0 auto;
+      max-width: 500px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .form-container h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #428bca;
+    }
+    .form-container .form-control {
+      margin-bottom: 15px;
+    }
+    .form-container .btn-primary {
+      width: 100px;
+      border-radius: 20px;
+      background-color: #428bca;
+      color: #fff;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .form-container .btn-primary:hover {
+      background-color: #fff;
+      color: #428bca;
+    }
+    .alert {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .alert-face {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+    .alert-yellow {
+      background-color: #fff3cd;
+    }
+    .alert-green {
+      background-color: #d4edda;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h1>Health Checker</h1>
+    <form id="healthForm">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="age">Age:</label>
+        <input type="number" id="age" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="bloodPressure">Blood Pressure (mmHg):</label>
+        <input type="text" id="bloodPressure" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="bloodSugar">Blood Sugar/Glucose Level (mg/dL or mmol/L):</label>
+        <input type="text" id="bloodSugar" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="bodyTemperature">Body Temperature (°C):</label>
+        <input type="number" id="bodyTemperature" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="heartRate">Heart Rate/Pulse (bpm):</label>
+        <input type="number" id="heartRate" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="cholesterol">Cholesterol Levels (mg/dL):</label>
+        <input type="number" id="cholesterol" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="bmi">Body Mass Index (BMI):</label>
+        <input type="number" id="bmi" class="form-control" required>
+      </div>
+      <button type="submit" class="btn-primary">Check</button>
+    </form>
+  </div>
+
+  <div id="resultContainer" class="alert"></div>
+
+  <table id="resultTable" class="table">
+    <thead>
+      <tr>
+        <th>Parameter</th>
+        <th>Value</th>
+        <th>Normal Range</th>
+        <th>High Range</th>
+        <th>Low Range</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+
+  <script >// Function to check the health parameters
+    document.addEventListener('DOMContentLoaded', function() {
+      function checkHealthParameters(event) {
+        event.preventDefault();
+    
+        // Retrieve form values
+        const name = document.getElementById('name').value;
+        const age = document.getElementById('age').value;
+    
+        // Perform checks on health parameters
+        let allParametersAreGood = true;
+        let recommendations = []; // Array to store recommendations
+    
+        // Check each health parameter and update allParametersAreGood and recommendations accordingly
+    
+        // Check blood pressure
+        const bloodPressure = document.getElementById('bloodPressure').value;
+        const [systolic, diastolic] = bloodPressure.split('/');
+    
+        const systolicThresholdHigh = 140;
+        const diastolicThresholdHigh = 90;
+        const systolicThresholdNormal = 120;
+        const diastolicThresholdNormal = 80;
+    
+        if (systolic >= systolicThresholdHigh || diastolic >= diastolicThresholdHigh) {
+          allParametersAreGood = false;
+          recommendations.push("Monitor your blood pressure regularly and consult a healthcare professional if it remains consistently high.");
+        } else if (systolic >= systolicThresholdNormal || diastolic >= diastolicThresholdNormal) {
+          recommendations.push("Maintain a healthy lifestyle to keep your blood pressure within the normal range.");
+        } else {
+          recommendations.push("Your blood pressure is within the normal range. Keep up the good work!");
+        }
+    
+        // Check blood sugar/glucose level
+        const bloodSugar = document.getElementById('bloodSugar').value;
+    
+        const bloodSugarThresholdHigh = 125;
+        const bloodSugarThresholdNormalLow = 70;
+        const bloodSugarThresholdNormalHigh = 100;
+    
+        if (bloodSugar > bloodSugarThresholdHigh) {
+          allParametersAreGood = false;
+          recommendations.push("Monitor your blood sugar levels regularly and consult a healthcare professional for further guidance.");
+        } else if (bloodSugar < bloodSugarThresholdNormalLow) {
+          allParametersAreGood = false;
+          recommendations.push("Monitor your blood sugar levels regularly and consult a healthcare professional if it remains consistently low.");
+        } else if (bloodSugar >= bloodSugarThresholdNormalLow && bloodSugar <= bloodSugarThresholdNormalHigh) {
+          recommendations.push("Your blood sugar levels are within the normal range. Keep up the good work!");
+        } else {
+          recommendations.push("Maintain a balanced diet and manage your blood sugar levels for optimal health.");
+        }
+    
+        // Check body temperature
+        const bodyTemperature = document.getElementById('bodyTemperature').value;
+        const temperatureUnit = 'F'; // Assuming Fahrenheit as the default unit
+    
+        const temperatureThresholdLow = 32;
+        const temperatureThresholdHigh = 40;
+        const temperatureThresholdNormal = (temperatureUnit === 'C') ? 37 : 98.6;
+    
+        if (bodyTemperature < temperatureThresholdLow || bodyTemperature > temperatureThresholdHigh) {
+          allParametersAreGood = false;
+          recommendations.push("Monitor your body temperature and consult a healthcare professional if it persists outside the normal range.");
+        } else {
+          recommendations.push("Your body temperature is within the normal range. Keep up the good work!");
+        }
+    
+        // Check heart rate/pulse
+        const heartRate = document.getElementById('heartRate').value;
+        const heartRateThresholdLow = 60;
+        const heartRateThresholdHigh = 100;
+    
+        if (heartRate < heartRateThresholdLow || heartRate > heartRateThresholdHigh) {
+          allParametersAreGood = false;
+          recommendations.push("Monitor your heart rate and consult a healthcare professional if it remains consistently outside the normal range.");
+        } else {
+          recommendations.push("Your heart rate is within the normal range. Keep up the good work!");
+        }
+    
+        // Check cholesterol levels
+        const cholesterol = document.getElementById('cholesterol').value;
+        const totalCholesterolThresholdHigh = 240;
+        const ldlCholesterolThresholdHigh = 160;
+        const hdlCholesterolThresholdLowMen = 40;
+        const hdlCholesterolThresholdLowWomen = 50;
+    
+        if (cholesterol >= totalCholesterolThresholdHigh) {
+          allParametersAreGood = false;
+          recommendations.push("Monitor your cholesterol levels and consult a healthcare professional for further guidance.");
+        } else if (cholesterol >= ldlCholesterolThresholdHigh) {
+          recommendations.push("Keep a close eye on your cholesterol levels and adopt heart-healthy habits.");
+        } else if (
+          cholesterol < ldlCholesterolThresholdHigh &&
+          (
+            (age >= 20 && cholesterol >= hdlCholesterolThresholdLowMen) ||
+            (age >= 20 && cholesterol >= hdlCholesterolThresholdLowWomen)
+          )
+        ) {
+          recommendations.push("Your cholesterol levels are within the normal range. Keep up the good work!");
+        } else {
+          allParametersAreGood = false;
+          recommendations.push("Take steps to manage your cholesterol levels and adopt a heart-healthy lifestyle.");
+        }
+    
+        // Check body mass index (BMI)
+        const bmi = document.getElementById('bmi').value;
+    
+        const bmiThresholdUnderweight = 18.5;
+        const bmiThresholdNormal = 24.9;
+        const bmiThresholdOverweight = 29.9;
+    
+        if (bmi < bmiThresholdUnderweight) {
+          allParametersAreGood = false;
+          recommendations.push("Ensure proper nutrition and consult a healthcare professional for guidance on healthy weight gain.");
+        } else if (bmi >= bmiThresholdUnderweight && bmi <= bmiThresholdNormal) {
+          recommendations.push("Your BMI falls within the normal weight range. Keep up the healthy lifestyle!");
+        } else if (bmi > bmiThresholdNormal && bmi <= bmiThresholdOverweight) {
+          recommendations.push("Maintain a balanced diet and engage in regular physical activity to achieve a healthy weight.");
+        } else {
+          allParametersAreGood = false;
+          recommendations.push("Take steps to manage your weight and consult a healthcare professional for personalized advice.");
+        }
+    
+        // Show result message based on the health parameter checks
+        const resultContainer = document.getElementById('resultContainer');
+        resultContainer.innerHTML = '';
+    
+        if (allParametersAreGood) {
+          // If all parameters are good, display green box with happy face
+          const successMessage = document.createElement('div');
+          successMessage.className = 'alert alert-success alert-green';
+          successMessage.innerHTML = `
+            <div class="alert-face">😊</div>
+            <p>${name}, your health status is looking good!</p>
+          `;
+          resultContainer.appendChild(successMessage);
+        } else {
+          // If any parameter is below average, display yellow box with sad face
+          const errorMessage = document.createElement('div');
+          errorMessage.className = 'alert alert-warning alert-yellow';
+          errorMessage.innerHTML = `
+            <div class="alert-face">😔</div>
+            <p>${name}, there are some health parameters that need attention. Please take appropriate measures to improve.</p>
+            <ul>
+              ${recommendations.map(recommendation => `<li>${recommendation}</li>`).join('')}
+            </ul>
+          `;
+          resultContainer.appendChild(errorMessage);
+        }
+    
+        // Update health parameters table
+        const tableBody = document.getElementById('parametersTableBody');
+        tableBody.innerHTML = '';
+    
+        const parameters = [
+          { name: 'Blood Pressure', value: bloodPressure, normal: `<120/<80 mmHg`, high: `≥140/≥90 mmHg` },
+          { name: 'Blood Sugar/Glucose Level', value: bloodSugar, normal: `70-100 mg/dL or 3.9-5.6 mmol/L`, high: `>125 mg/dL or 7.0 mmol/L`, low: `<70 mg/dL or <3.9 mmol/L` },
+          { name: 'Body Temperature', value: bodyTemperature, normal: `Around 98.6°F or 37°C`, low: `<32°C`, high: `>40°C` },
+          { name: 'Heart Rate/Pulse', value: heartRate, normal: `60-100 bpm` },
+          { name: 'Cholesterol Levels', value: cholesterol, normal: `Total: <200 mg/dL<br>LDL: <100 mg/dL<br>HDL: >40 mg/dL (men), >50 mg/dL (women)`, high: `Total: ≥240 mg/dL<br>LDL: ≥160 mg/dL<br>HDL: <40 mg/dL (men), <50 mg/dL (women)` },
+          { name: 'Body Mass Index (BMI)', value: bmi, normal: `18.5-24.9 kg/m²`, underweight: `<18.5 kg/m²`, overweight: `25-29.9 kg/m²`, obese: `≥30 kg/m²` }
+        ];
+    
+        parameters.forEach(parameter => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${parameter.name}</td>
+            <td>${parameter.value}</td>
+            <td>${parameter.normal}</td>
+            <td>${parameter.high || ''}</td>
+            <td>${parameter.low || ''}</td>
+          `;
+          tableBody.appendChild(row);
+        });
+      }
+    
+      // Attach event listener to the form submit button
+      const form = document.getElementById('healthForm');
+      form.addEventListener('submit', checkHealthParameters);
+    });
+    </script>
+</body>
+</html>
